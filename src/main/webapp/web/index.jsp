@@ -17,8 +17,13 @@
         margin: 20% 0 10% 0;
     }
     
+    .card-body {
+    	padding: 0.7rem;
+    }
+    
     .card .card-body h3 {
     	text-align: center;
+    	font-size: 2.18rem;
     }
     </style>
     
@@ -27,11 +32,20 @@
     <c:import url="header_navbar.jsp"></c:import>
 
     <div class="container">
-        <div class="jumbotron text-center bg-light">
-            <h1 class="display-4">WorkTracker System</h1>
-            <p class="lead">上下班打卡系統</p>
-            <a href="${pageContext.request.contextPath }/note/add.do" class="btn btn-primary btn-lg" style="width: 100px;">ADD</a>
-        </div>
+		<div class="jumbotron text-center bg-light">
+			<h1 class="display-4">WTS Note System</h1>
+			<p class="lead">Welcome, ${sessionScope.username }</p>
+		<div class="btn-group">
+			<button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+			  aria-expanded="false">
+			  ADD
+			</button>
+			<div class="dropdown-menu">
+				<a class="dropdown-item" href="${pageContext.request.contextPath }/note/add.do">Add WorkDays</a>
+				<a class="dropdown-item" href="${pageContext.request.contextPath }/todo/list.do">Todo List</a>
+			</div>
+		</div>
+		</div>
 
         <div class="card bg-light">
             <div class="card-body">
@@ -43,7 +57,7 @@
 
     </div>
     <script src="../js/jquery-3.4.0.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
     <script>
     function currentTime() {
         let time = new Date();
@@ -69,7 +83,7 @@
         if (seconds < 10) {
             seconds = "0" + seconds; 
         }
-		let timeLine = year + " - " + month + " - " + day + " &nbsp;&nbsp; " + hours + " : " + minutes + " : " + seconds;
+		let timeLine = year + "-" + month + "-" + day + " &nbsp;&nbsp; " + hours + ":" + minutes + ":" + seconds;
         $('#current_time').html(timeLine);
     }
         

@@ -10,6 +10,7 @@ public interface IUserService {
 	 * @param user object
 	 * @return new user id
 	 * @throws UsernameAlreadyExistsException
+	 * @throws PasswordNotFoundException
 	 */
 	Integer register(User user);
 	
@@ -29,6 +30,13 @@ public interface IUserService {
 	 * @return affected rows
 	 */
 	Integer insert(User user);
+	
+	/**
+	 * For AJAX check purpose
+	 * @param username
+	 * @return
+	 */
+	boolean checkIfUserExists(String username);
 	
 	/**
 	 * Find user by id

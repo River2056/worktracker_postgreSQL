@@ -35,12 +35,14 @@
 				<mvc:mapping path="/user/*"/>
 				<mvc:mapping path="/main/*"/>
 				<mvc:mapping path="/note/*"/>
+				<mvc:mapping path="/todo/*"/>
 				
 				<!-- 例外配置 -->
 				<mvc:exclude-mapping path="/user/login.do"/>
 				<mvc:exclude-mapping path="/user/register.do"/>
 				<mvc:exclude-mapping path="/user/handle_login.do"/>
 				<mvc:exclude-mapping path="/user/handle_register.do"/>
+				<mvc:exclude-mapping path="/user/check_username.do"/>
 				
 				<bean class="tw.com.river.interceptor.LoginInterceptor"/>
 			</mvc:interceptor>

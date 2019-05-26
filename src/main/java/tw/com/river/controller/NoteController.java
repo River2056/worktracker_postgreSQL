@@ -29,21 +29,37 @@ public class NoteController extends BaseController {
 	}
 	
 	@RequestMapping("/list.do")
-	public String showListPage(ModelMap modelMap, HttpSession session) {
-		Integer uid = getUidFromSession(session);
-		List<Note> noteList = noteService.findAllNotes(uid);
-		modelMap.addAttribute("noteList", noteList);
-		
+	public String showListPage() {
 		return "list";
 	}
 	
-	@RequestMapping("/edit.do")
-	public String showEditPage(Integer id, ModelMap modelMap, HttpSession session) {
+	@RequestMapping("/check_comment.do")
+	@ResponseBody
+	public ResponseResult<Void> checkForComment(String comment) {
+		boolean status = noteService.checkForComment(comment);
+		ResponseResult<Void> rr = status ? new ResponseResult<Void>(1) : new ResponseResult<Void>(0);
+		return rr;
+	}
+	
+	@RequestMapping("/get_note.do")
+	@ResponseBody
+	public ResponseResult<Note> handleShowNote(Integer id, HttpSession session) {
+		ResponseResult<Note> rr;
 		Integer uid = getUidFromSession(session);
 		Note note = noteService.findNoteByUidAndId(uid, id);
-		modelMap.addAttribute("note", note);
+		rr = new ResponseResult<Note>(1, note);
 		
-		return "edit";
+		return rr;
+	}
+	
+	@RequestMapping("/get_list.do")
+	@ResponseBody
+	public ResponseResult<List<Note>> handleShowList(HttpSession session) {
+		ResponseResult<List<Note>> rr;
+		Integer uid = getUidFromSession(session);
+		List<Note> noteList = noteService.findAllNotes(uid);
+		rr = new ResponseResult<List<Note>>(1, noteList);
+		return rr;
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/handle_add.do")
@@ -85,7 +101,6 @@ public class NoteController extends BaseController {
 		ResponseResult<Void> rr;
 		Integer uid = getUidFromSession(session);
 		note.setUid(uid);
-		System.out.println(note);
 		try {
 			noteService.edit(note);
 			rr = new ResponseResult<Void>(1, "修改成功!");
